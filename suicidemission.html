@@ -5,16 +5,17 @@
 <link href='korataki.ttf' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">
-
-function checkDaBox(boxvalue){
-  //TODO: WRITE THIS FUNCTION;
-  // The gist of this funciton is to check and uncheck the box if you press
-  // anywhere in the table entry (like a button's behavoir)
-  // Honestly, I should rewrite the table as a list of buttons,
-  // but I don't feel like doing that right now.
-
-  // YEAH EDUCATIONAL PROJECTS! :D
+NodeList.prototype.forEach = Array.prototype.forEach;
+function checkAllBoxes() {
+  var elements = document.getElementsByTagName('INPUT');
+  
+  elements.forEach(function(element) {
+    if (element.type === 'checkbox') {
+      element.click();
+    }
+  });
 }
+
 
 function calculateAverage(){
   var total_strength = 0;
@@ -23,30 +24,30 @@ function calculateAverage(){
 
   var heavy = document.getElementsByName("heavysquad");
   for (var i = 0; i < heavy.length; i++){
-    if (heavy[i].checked == true){
+    if (heavy[i].checked === true){
       total_strength += 3;
       total_squad += 1;
     }
   }
 
   var medium = document.getElementsByName("mediumsquad");
-  for (var i = 0; i < medium.length; i++){
-    if (medium[i].checked == true){
+  for (i = 0; i < medium.length; i++){
+    if (medium[i].checked === true){
       total_strength += 1;
       total_squad += 1;
     }
   }
 
   var light = document.getElementsByName("lightsquad");
-  for (var i = 0; i < light.length; i++){
-    if (light[i].checked == true){
+  for (i = 0; i < light.length; i++){
+    if (light[i].checked === true){
       total_squad += 1;
     }
   }
 
   var loyl = document.getElementsByName("loyal");
-  for (var i = 0; i < loyl.length; i++){
-    if (loyl[i].checked == true){
+  for (i = 0; i < loyl.length; i++){
+    if (loyl[i].checked === true){
       total_strength += 1;
     }
   }
@@ -65,7 +66,7 @@ function calculateAverage(){
 <div id="friends">
   <table id = "friendtbl">
       <tr>
-        <td onClick="checkDaBox();"><input type="checkbox" name="heavysquad" value="Garrus"> Garrus <br></td>
+        <td><input type="checkbox" name="heavysquad" value="Garrus"> Garrus <br></td>
         <td><input type="checkbox" name="loyal" value="loyal"> Loyal<br></td>
 
         <td class = "tbldivide"><input type="checkbox" name="mediumsquad" value="Jacob"> Jacob<br></td>
@@ -109,7 +110,11 @@ function calculateAverage(){
 
 
   </table>
-
+  
+  <button onClick="checkAllBoxes()" type="button">
+    CHECK ALL BOXES
+  </button>
+  
   <div class = "results">
     <button onclick="calculateAverage()" type="button"> GET RESULTS </button>
     <p id="resulttxt"> 0 </p>
@@ -118,6 +123,15 @@ function calculateAverage(){
 <p> Loyal will always increase total squad value by 1, even if a squadmate is not checked.</p>
 <p> If a Loyal box is checked and its squadmate is not, then it will screw up the calculation. </p>
 
+<script>
+console.log('hi');
+document.getElementById('friendtbl').addEventListener('click', function(event) {
+  if (event.target.tagName === 'TD') {
+    event.target.childNodes[0].click();
+  }
+});
+
+</script>
 
 </body>
 </html>
